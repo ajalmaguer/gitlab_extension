@@ -6,8 +6,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://gitlab.usaepay.dev/*/issues/*",
-        "https://gitlab.usaepay.staff/*/issues/*"
+        "https://gitlab.usaepay.dev/*",
+        "https://gitlab.usaepay.staff/*"
       ],
       "js": ["contentscript.js"]
     }

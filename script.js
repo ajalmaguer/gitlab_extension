@@ -101,7 +101,11 @@ function addNewSection () {
 	}
 }
 
-function render() {
+function onRoute(regEx) {
+	return window.location.pathname.split('/').last().match(regEx)
+}
+
+function renderIssues() {
 	addNewSection()
 
 	var linkData = getLinkData()
@@ -109,4 +113,18 @@ function render() {
 	$(linkListTargetElement).html(issueList(linkData))
 }
 
-render()
+
+function createFilterFocusKeyboardShortcut() {
+	document.addEventListener('keydown', e => {
+		if (e.code === 'KeyF' && e.shiftKey) {
+			e.preventDefault()
+			var filterElement = document.querySelector('input.filtered-search')
+			if (filterElement) filterElement.focus()
+		}
+	})
+}
+
+
+// start features
+if (onRoute(/(\d)+/)) renderIssues()
+if (onRoute(/issues/) || onRoute(/boards/) ) createFilterFocusKeyboardShortcut()
