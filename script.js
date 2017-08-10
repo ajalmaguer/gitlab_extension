@@ -124,7 +124,22 @@ function createFilterFocusKeyboardShortcut() {
 	})
 }
 
+function createOpenAllIssuesButton() {
+	// place new button in nav controls
+	const openIssuesButton = $('<button>', {class: 'btn btn-default', id: 'openIssuesButton'}).html('Open All Issues')[0];
+	$(openIssuesButton).click(openAllIssuesInNewWindows)
+	$('.nav-controls')[0].append(openIssuesButton);
+}
+
+function openAllIssuesInNewWindows() {
+	const links = $('.issue-title-text a').toArray();
+	links.forEach(function (link) {
+		const href = link.href
+		window.open(href , '_blank');
+	})
+}
 
 // start features
 if (onRoute(/(\d)+/)) renderIssues()
 if (onRoute(/issues/) || onRoute(/boards/) ) createFilterFocusKeyboardShortcut()
+if (onRoute(/issues/)) createOpenAllIssuesButton()
