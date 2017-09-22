@@ -188,7 +188,7 @@ function setupIssueSearchBarKeyboardShortcuts() {
 
 function focusOnIssueSearch() {
 	if (commandDown) {
-		$('input#ueIssueSearchNumber').focus()
+		$('input#ueIssueSearchNumber').focus().val('')
 	}
 }
 
