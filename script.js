@@ -125,6 +125,7 @@ function createFilterFocusKeyboardShortcut() {
 }
 
 function createOpenAllIssuesButton() {
+	console.log('creating open all issues button');
 	// place new button in nav controls
 	const openIssuesButton = $('<button>', {class: 'btn btn-default', id: 'openIssuesButton'}).html('Open All Issues')[0];
 	$(openIssuesButton).click(openAllIssuesInNewWindows)
@@ -139,7 +140,60 @@ function openAllIssuesInNewWindows() {
 	})
 }
 
+const issueFormTemplate = `
+	<li class="hidden-sm hidden-xs">
+		<form id="ueIssueSearch">
+			<input 
+				id="ueIssueSearchNumber"
+				type="text" 
+				class="search-input dropdown-menu-toggle no-outline js-search-dashboard-options disabled" 
+				style="margin-top: 8px;"
+				placeholder="search issue #">
+		</form>
+	</li>
+`
+
+function renderIssueSearchBar() {
+	$('ul.navbar-nav').prepend($(issueFormTemplate))
+	$('form#ueIssueSearch').submit(function (e) {
+		e.preventDefault()
+		const searchNumber = $('input#ueIssueSearchNumber').val()
+		if (searchNumber.match(/[^$,.\d]/)) return; // there are invalid characters 
+
+		const href = 'https://gitlab.usaepay.dev/console/common/issues/' + searchNumber
+		window.open(href, '_blank')
+	})
+
+	setupIssueSearchBarKeyboardShortcuts()
+}
+
+var commandDown = false
+
+function setupIssueSearchBarKeyboardShortcuts() {
+	$(document).on('keydown', function (e) {
+		if (e.keyCode === 91 || e.keyCode === 93) {
+			commandDown = true;
+		}
+		if (e.keyCode === 73) {
+			focusOnIssueSearch()
+		}
+	})
+
+	$(document).on('keyup', function (e) {
+		if (e.keyCode === 91 || e.keyCode === 93) {
+			commandDown = false;
+		}
+	})
+}
+
+function focusOnIssueSearch() {
+	if (commandDown) {
+		$('input#ueIssueSearchNumber').focus()
+	}
+}
+
 // start features
 if (onRoute(/(\d)+/)) renderIssues()
 if (onRoute(/issues/) || onRoute(/boards/) ) createFilterFocusKeyboardShortcut()
 if (onRoute(/issues/)) createOpenAllIssuesButton()
+if (onRoute()) renderIssueSearchBar()
