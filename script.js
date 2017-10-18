@@ -75,6 +75,7 @@ function addNewSection () {
 			<style>
 				.linkedIssueList {
 					margin-right: 88px;
+					margin-bottom: 20px;
 				}
 				.linkedIssueList .row {
 					margin-bottom: 10px;
@@ -86,7 +87,7 @@ function addNewSection () {
 					<i class="fa fa-hashtag fa-fw"></i>
 				</div>
 				<div class="title hide-collapsed">
-					Linked Issues
+					Linked Issues - <strong class="numClosedIssues"></strong>
 				</div>
 				<div class="time-tracking-content hide-collapsed">
 					<div class="time-tracking-no-tracking-pane linkedIssueList">
@@ -108,14 +109,28 @@ function onRoute(regEx) {
 	return window.location.pathname.split('/').last().match(regEx)
 }
 
+
+function renderNumClosedIssues(issues) {
+	var total = issues.length
+	var numClosed = 0
+	issues.forEach((issue) => {
+		if (issue.issue.indexOf('(closed)') !== -1) {
+			numClosed++
+		}
+	})
+
+	$('.numClosedIssues').html(`${numClosed} / ${total} closed`)
+}
+
 function renderIssues() {
 	addNewSection()
 
 	var linkData = getLinkData()
+	renderNumClosedIssues(linkData)
+
 	var linkListTargetElement = $('.linkedIssueList')[0]
 	$(linkListTargetElement).html(issueList(linkData))
 }
-
 
 function createFilterFocusKeyboardShortcut() {
 	document.addEventListener('keydown', e => {
