@@ -1,8 +1,8 @@
 {
   "name": "AJs Gitlab Issue Crosslinking Extension",
   "author": "AJ Almaguer",
-  "version": "1.3",
-  "description": "Displays linked issues in one place, issue search bar (command + i), opens all issues",
+  "version": "1.4",
+  "description": "Displays linked issues in one place, displays '#closed issues/ total referenced issues', issue search bar (command + i), opens all issues in issue list",
   "content_scripts": [
     {
       "matches": [

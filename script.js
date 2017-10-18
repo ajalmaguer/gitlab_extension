@@ -109,7 +109,6 @@ function onRoute(regEx) {
 	return window.location.pathname.split('/').last().match(regEx)
 }
 
-
 function renderNumClosedIssues(issues) {
 	var total = issues.length
 	var numClosed = 0
