@@ -73,6 +73,9 @@ function addNewSection () {
 	var newSection = $(`
 		<div id="referencedLinks">
 			<style>
+				.linkedIssueList {
+					margin-right: 88px;
+				}
 				.linkedIssueList .row {
 					margin-bottom: 10px;
 				}
