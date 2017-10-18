@@ -151,7 +151,7 @@ function createOpenAllIssuesButton() {
 
 function openAllIssuesInNewWindows() {
 	const links = $('.issue-title-text a').toArray();
-	links.forEach(function (link) {
+	links.reverse().forEach(function (link) {
 		const href = link.href
 		window.open(href , '_blank');
 	})
