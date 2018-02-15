@@ -14,6 +14,11 @@ Array.prototype.unique = function(uniqueField) {
 	return arr; 
 }
 
+Array.prototype.last = function () {
+	var length = this.length;
+	return this[length - 1];
+}
+
 
 // Links
 function getLinkData() {
@@ -209,8 +214,44 @@ function focusOnIssueSearch() {
 	}
 }
 
+// new gitlab
+function renderToggleSystemNotesButton() {
+	var targetEl = $('.js-awards-block')[0];
+	var button = getSystemNoteButton();
+	var hideNotes = true;
+	button.on('click', function () {
+		if (hideNotes) {
+			hideSystemNotes();
+		} else {
+			showSystemNotes();
+		}
+		hideNotes = !hideNotes;
+	});
+	
+	targetEl.append(button[0]);
+}
+
+function showSystemNotes() {
+	$('.system-note').slideToggle();
+	$('#toggle-system-notes span').text('Hide System Notes');
+}
+
+function hideSystemNotes() {
+	$('.system-note').slideToggle();
+	$('#toggle-system-notes span').text('Show System Notes');	
+}
+
+function getSystemNoteButton() {
+	return $(`<button class=" award-control btn" type="button" id="toggle-system-notes">
+				<span class="award-control-text js-counter">
+					Hide System Notes
+				</span>
+			</button>`);
+}
+
 // start features
 if (onRoute(/(\d)+/)) renderIssues()
+if (onRoute(/(\d)+/)) renderToggleSystemNotesButton()
 if (onRoute(/issues/) || onRoute(/boards/) ) createFilterFocusKeyboardShortcut()
 if (onRoute(/issues/)) createOpenAllIssuesButton()
 if (onRoute()) renderIssueSearchBar()
